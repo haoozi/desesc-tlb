@@ -11,6 +11,7 @@
 typedef uint64_t pte_t;
 typedef uint64_t id_t;
 
+// SV48 Page Table Entry Format
 struct sv48pte_t {
     uint64_t rsw: 10;
     uint64_t ppn: 38;
@@ -28,7 +29,8 @@ struct sv48pte_t {
     uint64_t v: 1;
 };
 
-
+// TLB translate callback, accept 1 parameter 
+// (has type of TLBTranslateResponse)
 typedef TLBTranslateCallback CallbackFunction1<TLBTranslateResponse>;
 
 enum PageFaultType {
@@ -116,13 +118,11 @@ private:
     int nPTW;
     std::vector<PTWEntry> *ptw_entries;
 
+    // Send request to tlb or memory
     void read_L1TLB(uint32_t ptw_id);
     void read_L1D(uint32_t ptw_id);
-    // void find_PTE(Addr_t addr);
 
-    // void onReadComplete();
-
-    // void translate(Addr_t vaddr, CallBack)
+    // worker
     void TLB::do_translate(uint32_t ptw_id);
 
 public:
