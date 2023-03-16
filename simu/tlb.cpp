@@ -27,10 +27,10 @@ void TLB::read_L1TLB(uint32_t ptw_id) {
     // Mark read status as ongoing
     ptw_entries[ptw_id].l1tlb_read_ongoing[translating_vpn] = true;
 
-
-    // Issue read request. 
+    // TODO: Issue read request. 
     
     // Mark status as complete when callback function called
+    ptw_entries[ptw_id].l1tlb_read_complete[translating_vpn] = true;
 
 
     return;
@@ -38,6 +38,20 @@ void TLB::read_L1TLB(uint32_t ptw_id) {
 
 void TLB::read_L1D(uint32_t ptw_id) {
     // Similar with read_L1TLB, but issue memory read to L1D
+    // Issue read request. If complete, 
+    auto translating_vpn = ptw_entries[ptw_id].translating_vpn_num;
+
+    // Mark read status as ongoing
+    ptw_entries[ptw_id].mem_read_ongoing[translating_vpn] = true;
+
+    // TODO: Issue read request. 
+    
+    // Mark status as complete when callback function called
+    // (Do this in the mem callback)
+    ptw_entries[ptw_id].mem_read_complete[translating_vpn] = true;
+
+
+
     return;
 }
 
